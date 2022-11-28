@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import AutoRoute from './Routes/AuthRoute.js'
+import UserRoute from "./Routes/UserRoute.js"
 
 // Routes
 
@@ -30,3 +31,4 @@ mongoose
     // usage fo routes
 
     app.use('/auth', AutoRoute)
+    app.use('/user', UserRoute)

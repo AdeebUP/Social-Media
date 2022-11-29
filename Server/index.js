@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import AutoRoute from './Routes/AuthRoute.js'
 import UserRoute from "./Routes/UserRoute.js"
+import PostRoute from "./Routes/PostRoute.js"
 
 // Routes
 
@@ -32,3 +33,4 @@ mongoose
 
     app.use('/auth', AutoRoute)
     app.use('/user', UserRoute)
+    app.use('/post', PostRoute)

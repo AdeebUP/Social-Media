@@ -13,7 +13,7 @@ const Post = ({ data }) => {
   const [likes, setLikes] = useState(data.likes.lenght)
   return (
     <div className="Post">
-        <img src={data.img? process.env.REACT_APP_PUBLIC_FOLDER + data.image: ""} alt="" />
+        <img src={data.image? process.env.REACT_APP_PUBLIC_FOLDER + data.image: ""} alt="" />
 
         <div className="postReact">
             <img src={data.liked?Heart: NotLike} alt="" />

@@ -9,16 +9,16 @@ const Posts = () => {
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.authReducer.authData)
   const { posts, loading } = useSelector((state) => state.postReducer)
-  useEffect(() => {
+  useEffect(()=> {
     dispatch(getTimelinePosts(user._id))
   }, [])
   return (
     <div className="Posts">
       {loading
-        ? "Fetching Posts..."
-        : posts.map((post, id) => {
-          return <Post data={post} id={id} />
-        })}
+      ? "Fetching Posts..."
+      :posts.map((post, id) => {
+        return <Post data={post} id={id} />
+      })}
     </div>
   )
 }

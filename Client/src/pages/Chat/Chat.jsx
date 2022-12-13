@@ -8,7 +8,7 @@ import Conversation from '../../components/Conversation/Conversation'
 const Chat = () => {
 
     const { user } = useSelector((state) => state.authReducer.authData)
-    console.log(user);
+    // console.log(user);
 
     const [chats, setChats] = useState([])
 
@@ -34,11 +34,11 @@ const Chat = () => {
                 <div className="Chat-container">
                     <h2>Chats</h2>
                     <div className="Chat-list">
-                        {chats.map((chat) => {
+                        {chats.map((chat) => (
                             <div>
                                 <Conversation data={chat} currentUserId={user._id} />
                             </div>
-                        })}
+                        ))}
                     </div>
                 </div>
             </div>

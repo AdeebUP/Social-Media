@@ -22,9 +22,11 @@ const Conversation = ({ data, currentUserId }) => {
       <div className="follower conversation">
         <div>
           <div className="online-dot"></div>
-          <img src={userData?.profilePicture ? process.env.
-            REACT_APP_PUBLIC_FOLDER + userData.profilePicture : process.env.
-              REACT_APP_PUBLIC_FOLDER + "defaultProfile.png"} alt=""
+          <img
+            src={
+              userData?.profilePicture
+                ? process.env.REACT_APP_PUBLIC_FOLDER + userData.profilePicture
+                : process.env.REACT_APP_PUBLIC_FOLDER + "defaultProfile.png"} alt=""
             className='followerImage'
             style={{ width: '50px', height: '50px' }}
           />
@@ -34,7 +36,7 @@ const Conversation = ({ data, currentUserId }) => {
           </div>
         </div>
       </div>
-      <hr style={{width:'85%', border: '0.1px solid #ececec'}} />
+      <hr style={{ width: '85%', border: '0.1px solid #ececec' }} />
     </>
   )
 }

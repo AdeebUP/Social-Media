@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import './Chat.css'
 import LogoSearch from '../../components/LogoSearch/LogoSearch'
+import Home from '../../img/home.png'
+import Noti from '../../img/noti.png'
+import Comment from '../../img/comment.png'
+import { UilSetting } from '@iconscout/react-unicons'
 import { useSelector } from "react-redux"
 import { userChats } from '../../api/ChatRequests'
+import { Link } from 'react-router-dom'
+import ChatBox from '../../components/ChatBox/ChatBox'
 import Conversation from '../../components/Conversation/Conversation'
+// import Conversation from '../../components/Conversation/Conversation'
 
 const Chat = () => {
 
     const { user } = useSelector((state) => state.authReducer.authData)
-    // console.log(user);
 
     const [chats, setChats] = useState([])
+    const [currentChat, setCurrentChat] = useState(null)
 
     useEffect(() => {
         const getChats = async () => {
@@ -39,13 +46,35 @@ const Chat = () => {
                                 <Conversation data={chat} currentUserId={user._id} />
                             </div>
                         ))}
+                    {/* <h1>hai</h1> */}
+                        {/* {chats.map((chat) => (
+                            <div onClick={() => setCurrentChat(chat)} >
+                                <Conversation data={chat} currentUserId={user._id} />
+                            </div>
+                        ))} */}
                     </div>
                 </div>
             </div>
 
             {/* Right Side */}
             <div className="Right-side-chat">
-                Right side
+                <div style={{width: '20rem', alignSelf: 'flex-end'}}>
+                    <div className="navIcons">
+                        <Link to='../home'>
+                            <img src={Home} alt="" />
+                        </Link>
+                        <UilSetting />
+                        <img src={Noti} alt="" />
+                        <Link to='../chat'>
+                            <img src={Comment} alt="" />
+                        </Link>
+                    </div>
+
+                    {/* chat body */}
+
+                            <ChatBox chat={currentChat} currentUser = {user._id} />
+
+                </div>
             </div>
         </div>
     )

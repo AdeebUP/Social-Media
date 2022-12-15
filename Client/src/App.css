@@ -24,10 +24,25 @@
 .blur{
   position: absolute;
   width: 22rem;
-  height: 14rem;
+  height: 22rem;
   border-radius: 50%;
-  background: #a6ddf0;
+  background: rgb(248, 249, 226);
   filter: blur(72px);
+}
+
+.chat-button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  transition: all 100ms ease-out;
+}
+
+.chat-button:hover{
+  cursor: pointer;
+  background-color: #cfcdcd;
 }
 
 .button{
@@ -55,4 +70,28 @@
 
 ::-webkit-scrollbar{
   display: none;
+}
+
+.infoForms {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.infoInputs {
+  border: none;
+  outline: none;
+  background-color: orange;
+  border-radius: 8px;
+  padding: 20px;
+  flex: 1;
+}
+
+.infoForms>div {
+  display: flex;
+  gap: 1rem;
+  width: 90%;
+  height: 2rem;
 }

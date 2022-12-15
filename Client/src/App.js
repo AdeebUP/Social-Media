@@ -1,5 +1,5 @@
 import "./App.css"
-import Auth from "./pages/Auth/Auth";
+import Auth from "./pages/Auth/Auth.jsx";
 import Home from "./pages/home/Home";
 import Profile from "./pages/Profile/Profile";
 import { Routes, Route, Navigate } from 'react-router-dom'

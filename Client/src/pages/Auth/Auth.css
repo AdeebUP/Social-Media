@@ -81,3 +81,50 @@
     align-items: center;
     justify-content: center;
 }
+
+/* extra */
+
+.haveAnAc {
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.haveAnAc:hover {
+    color: blue;
+}
+
+
+.d__none {
+    display: none;
+}
+
+.d__block {
+    display: block;
+}
+
+.confirmPass {
+    color: red;
+    font-size: 12px;
+    margin-right: 5px;
+    align-self: center;
+}
+
+@media only screen and (max-width: 600px) {
+    .a-left {
+        display: none !important;
+    }
+}
+
+.validation{
+    display: flex;
+    flex-direction:column;
+    padding: 13px;
+    
+}
+
+.passInput1{
+    position: relative;
+    right: -1px;
+    width: 400px;
+    bottom:-13px;
+}

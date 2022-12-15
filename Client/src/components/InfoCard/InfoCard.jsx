@@ -5,7 +5,7 @@ import ProfileModal from '../ProfileModal/ProfileModal'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import * as UserApi from '../../api/UserRequest.js'
-import { logOut } from '../../actions/AuthAction'
+import { logOut } from '../../actions/AuthAction.js'
 
 const InfoCard = () => {
     const [modalOpened, setModalOpened] = useState(false);

@@ -61,9 +61,10 @@ const Chat = () => {
                             <img src={Comment} alt="" />
                         </Link>
                     </div>
+                </div>
 
-                    {/* chat body */}
-
+                {/* chat body */}
+                <div>
                     <ChatBox chat={currentChat} currentUser={user._id} />
 
                 </div>

@@ -8,9 +8,8 @@ import { UilSetting } from '@iconscout/react-unicons'
 import { useSelector } from "react-redux"
 import { userChats } from '../../api/ChatRequests'
 import { Link } from 'react-router-dom'
-import ChatBox from '../../components/ChatBox/ChatBox'
+import ChatBox from '../../components/ChatBox/ChatBox.jsx'
 import Conversation from '../../components/Conversation/Conversation'
-// import Conversation from '../../components/Conversation/Conversation'
 
 const Chat = () => {
 
@@ -25,7 +24,6 @@ const Chat = () => {
                 const { data } = await userChats(user._id)
                 setChats(data)
                 console.log(data);
-
             } catch (error) {
                 console.log(error);
             }
@@ -42,23 +40,17 @@ const Chat = () => {
                     <h2>Chats</h2>
                     <div className="Chat-list">
                         {chats.map((chat) => (
-                            <div>
+                            <div onClick={() => setCurrentChat(chat)}>
                                 <Conversation data={chat} currentUserId={user._id} />
                             </div>
                         ))}
-                    {/* <h1>hai</h1> */}
-                        {/* {chats.map((chat) => (
-                            <div onClick={() => setCurrentChat(chat)} >
-                                <Conversation data={chat} currentUserId={user._id} />
-                            </div>
-                        ))} */}
                     </div>
                 </div>
             </div>
 
             {/* Right Side */}
             <div className="Right-side-chat">
-                <div style={{width: '20rem', alignSelf: 'flex-end'}}>
+                <div style={{ width: '20rem', alignSelf: 'flex-end' }}>
                     <div className="navIcons">
                         <Link to='../home'>
                             <img src={Home} alt="" />
@@ -72,7 +64,7 @@ const Chat = () => {
 
                     {/* chat body */}
 
-                            <ChatBox chat={currentChat} currentUser = {user._id} />
+                    <ChatBox chat={currentChat} currentUser={user._id} />
 
                 </div>
             </div>

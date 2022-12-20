@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { getMessages } from '../../api/MessageRequests'
+import { addMessage, getMessages } from '../../api/MessageRequests'
 import { getUser } from '../../api/UserRequest'
 import { format } from 'timeago.js'
 import InputEmoji from 'react-input-emoji'
 import './ChatBox.css'
 
-const ChatBox = ({ chat, currentUser }) => {
+const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
     const [userData, setUserData] = useState(null)
     const [messages, setMessages] = useState([])
     const [newMessage, setNewMessage] = useState("")
+
+    useEffect(() => {
+        if (receiveMessage !== null && receiveMessage.chatId === chat._id) {
+            setMessages([...messages, receiveMessage])
+        }
+    }, [receiveMessage])
 
     // fetching data for header
 
@@ -42,6 +48,31 @@ const ChatBox = ({ chat, currentUser }) => {
 
     const handleChange = (newMessages) => {
         setNewMessage(newMessage)
+    }
+
+    const handleSend = async (e) => {
+        e.preventDefault()
+        const message = {
+            senderId: currentUser,
+            text: newMessage,
+            chatId: chat._id
+        }
+
+        // send message to database
+
+        try {
+            const { data } = await addMessage(message)
+            setMessages([...message, data])
+            setNewMessage("")
+        } catch (error) {
+            console.log(error);
+        }
+
+        // send message to socket server
+
+        const receiverId = chat.members.find((id) => id !== currentUser)
+        setSendMessage({ ...message, receiverId })
+
     }
 
     return (
@@ -92,7 +123,7 @@ const ChatBox = ({ chat, currentUser }) => {
                                 value={newMessage}
                                 onChange={handleChange}
                             />
-                            <div className="send-button button">
+                            <div className="send-button button" onClick={handleSend} >
                                 Send
                             </div>
                         </div>

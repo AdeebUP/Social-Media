@@ -10,6 +10,8 @@ import { userChats } from '../../api/ChatRequests'
 import { Link } from 'react-router-dom'
 import ChatBox from '../../components/ChatBox/ChatBox.jsx'
 import Conversation from '../../components/Conversation/Conversation'
+import { io } from 'socket.io-client'
+import { useRef } from 'react'
 
 const Chat = () => {
 
@@ -17,6 +19,35 @@ const Chat = () => {
 
     const [chats, setChats] = useState([])
     const [currentChat, setCurrentChat] = useState(null)
+    const [onlineUsers, setOnlineUsers] = useState([])
+    const [sendMessage, setSendMessage] = useState(null)
+    const [receiveMessage, setReceiveMessage] = useState(null)
+    const socket = useRef()
+
+    // sending message to socket server
+
+    useEffect(() => {
+        if (sendMessage !== null) {
+            socket.current.emit('send-message', sendMessage)
+        }
+    }, [sendMessage])
+
+    useEffect(() => {
+        socket.current = io('http://localhost:8800')
+        socket.current.emit("new-user-add", user._id)
+        socket.current.on('get-users', (users) => {
+            setOnlineUsers(users)
+            // console.log(onlineUsers);
+        })
+    }, [user])
+
+    // receive Message from socket server
+
+    useEffect(() => {
+        socket.current.on("receive-message", (data) => {
+            setReceiveMessage(data)
+        })
+    }, [])
 
     useEffect(() => {
         const getChats = async () => {
@@ -65,7 +96,8 @@ const Chat = () => {
 
                 {/* chat body */}
                 <div>
-                    <ChatBox chat={currentChat} currentUser={user._id} />
+                    <ChatBox chat={currentChat} currentUser={user._id} setSendMessage=
+                        {setSendMessage} receiveMessage={receiveMessage} />
 
                 </div>
             </div>

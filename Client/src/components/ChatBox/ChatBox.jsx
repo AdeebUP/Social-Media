@@ -4,14 +4,16 @@ import { getUser } from '../../api/UserRequest'
 import { format } from 'timeago.js'
 import InputEmoji from 'react-input-emoji'
 import './ChatBox.css'
+import { useRef } from 'react'
 
 const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
     const [userData, setUserData] = useState(null)
     const [messages, setMessages] = useState([])
     const [newMessage, setNewMessage] = useState("")
+    const scroll = useRef()
 
     useEffect(() => {
-        if (receiveMessage !== null && receiveMessage.chatId === chat._id) {
+        if (receiveMessage !== null && receiveMessage?.chatId === chat?._id) {
             setMessages([...messages, receiveMessage])
         }
     }, [receiveMessage])
@@ -36,8 +38,8 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const { data } = await getMessages(chat._id)
-                console.log(data);
+                const { data } = await getMessages(chat?._id)
+                console.log(data, "here message get");
                 setMessages(data)
             } catch (error) {
                 console.log(error);
@@ -46,7 +48,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
         if (chat !== null) fetchMessages()
     }, [chat])
 
-    const handleChange = (newMessages) => {
+    const handleChange = (newMessage) => {
         setNewMessage(newMessage)
     }
 
@@ -62,7 +64,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
 
         try {
             const { data } = await addMessage(message)
-            setMessages([...message, data])
+            setMessages([...messages, data])
             setNewMessage("")
         } catch (error) {
             console.log(error);
@@ -74,6 +76,12 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
         setSendMessage({ ...message, receiverId })
 
     }
+
+    // Always scroll to last message
+
+    useEffect(() => {
+        scroll.current?.scrollIntoView({ behavior: "smooth" })
+    }, [messages])
 
     return (
         <>
@@ -105,9 +113,10 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
                         <div className="chat-body">
                             {messages.map((message) => (
                                 <>
-                                    <div className={
-                                        message.senderId === currentUser ? "message own" : "message"
-                                    }
+                                    <div ref={scroll}
+                                        className={
+                                            message.senderId === currentUser ? "message own" : "message"
+                                        }
                                     >
                                         <span>{message.text}</span>
                                         <span>{format(message.createdAt)}</span>
@@ -127,7 +136,6 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receiveMessage }) => {
                                 Send
                             </div>
                         </div>
-
                     </>
                 ) : (
                     <span className='chatbox-empty-message'>

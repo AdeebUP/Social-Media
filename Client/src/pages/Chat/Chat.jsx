@@ -45,6 +45,7 @@ const Chat = () => {
 
     useEffect(() => {
         socket.current.on("receive-message", (data) => {
+            console.log("Data Received in parent Chat.jsx", data);
             setReceiveMessage(data)
         })
     }, [])
@@ -62,6 +63,12 @@ const Chat = () => {
         getChats()
     }, [user])
 
+    const checkOnlineStatus = (chat) => {
+        const chatmember = chat.members.find((member) => member !== user._id)
+        const online = onlineUsers.find((user) => user.userId === chatmember)
+        return online ? true : false
+    }
+
     return (
         <div className="Chat">
             {/* Left Side */}
@@ -72,7 +79,7 @@ const Chat = () => {
                     <div className="Chat-list">
                         {chats.map((chat) => (
                             <div onClick={() => setCurrentChat(chat)}>
-                                <Conversation data={chat} currentUserId={user._id} />
+                                <Conversation data={chat} currentUserId={user._id} online={checkOnlineStatus(chat)} />
                             </div>
                         ))}
                     </div>
